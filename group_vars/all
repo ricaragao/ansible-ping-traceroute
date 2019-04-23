@@ -1,0 +1,3 @@
+user: raragao
+ping_command: ping -c 1 -q -W 1 
+traceroute_command: traceroute -m 10

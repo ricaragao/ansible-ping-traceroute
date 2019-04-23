@@ -1,0 +1,11 @@
+---
+- name: connect test
+  hosts: 
+    - servers
+  remote_user: "{{ user }}"
+  become: yes
+  become_method: sudo
+  gather_facts: no
+
+  roles:
+    - test_connect

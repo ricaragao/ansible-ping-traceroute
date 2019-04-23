@@ -1,0 +1,15 @@
+- name: Traceroute 
+  shell: traceroute -m 10 {{ item }}
+  loop: "{{ groups['destinations'] }}"
+  register: command_output
+  ignore_errors: yes
+  no_log: true
+  changed_when: false
+
+- name: Debug
+  debug: 
+    msg: "{{ item.stdout.split('\n') }}"
+  when: item.rc == 0
+  loop: "{{ command_output.results }}"
+  loop_control: 
+    label: "{{ item.cmd }}"
