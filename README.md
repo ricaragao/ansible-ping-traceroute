@@ -46,3 +46,100 @@ Inside of playbook path, execute:
 This above command ask for password. If you don't need password, remove -k parameter.
 
 
+## Results
+
+### Ping results
+
+The ping results OK show "msg": "PING SUCCESS". If fail, show skipping.
+
+```
+TASK [test_connect : Debug] ********************************************************************************************************************
+ok: [192.168.103.3] => (item=Pingando 192.168.103.3) => {
+    "msg": "PING SUCCESS"
+}
+skipping: [192.168.103.3] => (item=Pingando 192.168.103.55) 
+ok: [192.168.103.6] => (item=Pingando 192.168.103.3) => {
+    "msg": "PING SUCCESS"
+}
+ok: [192.168.103.3] => (item=Pingando 192.168.103.6) => {
+    "msg": "PING SUCCESS"
+}
+skipping: [192.168.103.6] => (item=Pingando 192.168.103.55) 
+ok: [192.168.103.3] => (item=Pingando 192.168.103.1) => {
+    "msg": "PING SUCCESS"
+}
+ok: [192.168.103.6] => (item=Pingando 192.168.103.6) => {
+    "msg": "PING SUCCESS"
+}
+ok: [192.168.103.6] => (item=Pingando 192.168.103.1) => {
+    "msg": "PING SUCCESS"
+}
+```
+
+### Traceroute results
+
+The traceroute results show the stdout of command.
+
+```
+ok: [192.168.103.3] => (item=tracepath 192.168.103.3) => {
+    "msg": [
+        " 1:  webserver.local                                       0.093ms reached", 
+        "     Resume: pmtu 65535 hops 1 back 1 "
+    ]
+}
+ok: [192.168.103.6] => (item=tracepath 192.168.103.3) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  192.168.103.3                                         0.670ms !H", 
+        " 1:  192.168.103.3                                         0.454ms !H", 
+        "     Resume: pmtu 1500 "
+    ]
+}
+ok: [192.168.103.3] => (item=tracepath 192.168.103.55) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  webserver.local                                     448.397ms !H", 
+        " 1:  no reply", 
+        " 1:  webserver.local                                     3006.881ms !H", 
+        "     Resume: pmtu 1500 "
+    ]
+}
+ok: [192.168.103.3] => (item=tracepath 192.168.103.6) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  192.168.103.6                                         0.416ms !H", 
+        " 1:  192.168.103.6                                         0.384ms !H", 
+        "     Resume: pmtu 1500 "
+    ]
+}
+ok: [192.168.103.6] => (item=tracepath 192.168.103.55) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  localhost.localdomain                               447.715ms !H", 
+        " 1:  localhost.localdomain                               3004.794ms !H", 
+        "     Resume: pmtu 1500 "
+    ]
+}
+ok: [192.168.103.6] => (item=tracepath 192.168.103.6) => {
+    "msg": [
+        " 1:  localhost.localdomain                                 0.083ms reached", 
+        "     Resume: pmtu 65535 hops 1 back 1 "
+    ]
+}
+ok: [192.168.103.3] => (item=tracepath 192.168.103.1) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  192.168.103.1                                         0.286ms reached", 
+        " 1:  192.168.103.1                                         0.206ms reached", 
+        "     Resume: pmtu 1500 hops 1 back 1 "
+    ]
+}
+ok: [192.168.103.6] => (item=tracepath 192.168.103.1) => {
+    "msg": [
+        " 1?: [LOCALHOST]                                         pmtu 1500", 
+        " 1:  192.168.103.1                                         0.235ms reached", 
+        " 1:  192.168.103.1                                         0.181ms reached", 
+        "     Resume: pmtu 1500 hops 1 back 1 "
+    ]
+}
+```
