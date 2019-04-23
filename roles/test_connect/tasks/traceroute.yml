@@ -1,12 +1,12 @@
-- name: Traceroute 
-  shell: traceroute -m 10 {{ item }}
-  loop: "{{ groups['destinations'] }}"
+- name: Traceroute executing
+  shell: "{{ traceroute_command }} {{ item }}"
+  loop: "{{ groups['targets'] }}"
   register: command_output
   ignore_errors: yes
   no_log: true
   changed_when: false
 
-- name: Debug
+- name: Traceroute report
   debug: 
     msg: "{{ item.stdout.split('\n') }}"
   when: item.rc == 0

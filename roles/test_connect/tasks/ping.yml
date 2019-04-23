@@ -1,15 +1,14 @@
-- name: Ping 
-  shell: ping -c 1 -q -W 1 {{ item }}
-  loop: "{{ groups['destinations'] }}"
+- name: Ping Executing
+  shell: "{{ ping_command }} {{ item }}"
+  loop: "{{ groups['targets'] }}"
   register: command_output
-  # failed_when: ('100% packet loss' in command_output.stdout)
   ignore_errors: yes
   no_log: true
   changed_when: false
 
-- name: Debug
+- name: Ping Report
   debug: 
-    msg: "PINGOU"
+    msg: "PING SUCCESS"
   when: item.rc == 0
   loop: "{{ command_output.results }}"
   loop_control: 
